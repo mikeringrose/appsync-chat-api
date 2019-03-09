@@ -1,0 +1,17 @@
+#if($util.isNull($context.prev.result))
+    $util.error("User is not authorized to make this query!")
+#end
+{
+    "version": "2017-02-28",
+    "operation": "Query",
+    "query": {
+        "expression": "channelId = :channelId",
+        "expressionValues": {
+            ":channelId": { "S": "${context.arguments.input.channelId}" }
+        }
+    },
+    "scanIndexForward": false,
+    "select": "ALL_ATTRIBUTES",
+    "limit": #if($context.arguments.input.limit) $context.arguments.input.limit #else 10 #end,
+    "nextToken": #if($context.arguments.input.nextToken) "$context.arguments.input.nextToken" #else null #end
+}

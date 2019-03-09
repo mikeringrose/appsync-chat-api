@@ -1,0 +1,13 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "UpdateItem",
+    "key" : {
+        "id" : { "S" : "${context.arguments.channelId}" }
+    },
+    "update" : {
+        "expression" : "ADD members :member",
+        "expressionValues": {
+        	":member" : { "SS" : ["${ctx.identity.username}"] }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+        "id" : { "S" : "$util.autoId()" },
+        "uniqueName": { "S" : "${context.arguments.input.uniqueName}"}
+    },
+    "attributeValues" : {
+        "name": { "S" : "${context.arguments.input.name}" },
+        "createdAt": {"S" : "$util.time.nowISO8601()" },
+        "createdBy": {"S" : "${context.identity.username}"}
+    }
+}

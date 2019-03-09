@@ -1,0 +1,71 @@
+type Query {
+    me: User!
+    channels: ChannelConnection
+    messages(input: MessageFilter!): MessageConnection
+    memberships: MembershipConnection
+}
+
+type Mutation {
+    createChannel(input: ChannelInput!): Channel!
+    joinChannel(channelId: String!): Membership!
+    sendMessage(channelId: String!, content: String!): Message!
+}
+
+type Subscription {
+    addedMessage(channelId: String!): Message
+    @aws_subscribe(mutations: ["sendMessage"])
+    joinedChannel(channelId: String!): Membership
+    @aws_subscribe(mutations: ["joinChannel"])
+}
+
+input ChannelInput {
+    name: String!
+    uniqueName: String!
+}
+
+input MessageFilter {
+    channelId: String!
+    limit: Int
+}
+
+type ChannelConnection {
+    items: [Channel]!
+    nextToken: String
+}
+
+type MessageConnection {
+    items: [Message]!
+    nextToken: String
+}
+
+type MembershipConnection {
+    items: [Membership]!
+    nextToken: String
+}
+
+type Channel {
+    id: ID!
+    name: String!
+    uniqueName: String!
+    members: [String!]
+    createdAt: String!
+}
+
+type Message {
+    id: ID!
+    content: String!
+    channelId: String!
+    createdBy: User!
+    createdAt: String!
+}
+
+type User {
+    username: String!
+    createdAt: String!
+}
+
+type Membership {
+    user: User!
+    channel: Channel!
+    createdAt: String!
+}

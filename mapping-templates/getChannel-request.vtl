@@ -1,0 +1,20 @@
+{
+    "version": "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        "expression": "id = :channelId",
+        "expressionValues" : {
+            ":channelId" : {
+                "S" : "${ctx.stash.channelId}"
+            }
+        }
+    },
+    "filter": {
+        "expression": "contains(members, :username)",
+        "expressionValues" : {
+            ":username": {
+                "S" : "${ctx.stash.username}"
+            }
+        }
+    }
+}

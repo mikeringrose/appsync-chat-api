@@ -1,0 +1,7 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Scan",
+    "select": "ALL_ATTRIBUTES",
+    "limit": #if($context.arguments.input.limit) $context.arguments.input.limit #else 10 #end,
+    "nextToken": #if($context.arguments.input.nextToken) "$context.arguments.input.nextToken" #else null #end
+}
